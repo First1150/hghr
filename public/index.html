@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>chat-app</title>
+    <title>Game Room</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1 id="title-head">chat-app</h1>
-    <div class="center-container">
-        <div id="chat-display"></div>
-    </div>
-    <div>
-        <input type="text" id="message-input" placeholder="type your message...">
-        <button id="send-button">send</button>
+    <div class="container">
+        <h1>Game Room</h1>
+        <div id="players-list">
+            <!-- Player list will be dynamically generated here -->
+        </div>
+        <div id="game-board">
+            <!-- Game board will be here -->
+        </div>
+        <button id="back-to-lobby-btn">Back to Lobby</button>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
