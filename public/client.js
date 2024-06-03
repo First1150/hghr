@@ -1,29 +1,39 @@
 const socket = io();
 
-socket.on('connect', () => {
-    console.log('Connected to the server');
+document.getElementById('new-game-btn').addEventListener('click', () => {
+    socket.emit('createGame');
 });
 
-socket.on('user-id', (userId) => {
-    console.log('My user id:', userId);
-    // คุณสามารถใช้ userId นี้เพื่อทำสิ่งต่างๆ เช่น เก็บใน localStorage หรือแสดงผลในหน้าเว็บ
+socket.on('gameCreated', (gameId) => {
+    window.location.href = `/game.html?gameId=${gameId}`;
 });
 
-const messageInput = document.getElementById('message-input');
-const sendButton = document.getElementById('send-button');
-const chatDisplay = document.getElementById('chat-display');
+socket.on('gameList', (games) => {
+    const gameListDiv = document.getElementById('game-list');
+    gameListDiv.innerHTML = '';
 
-sendButton.addEventListener('click', () => {
-    const message = messageInput.value;
-    if (message.trim()) {
-        socket.emit('chat-message', message);
-        messageInput.value = '';
-    }
+    games.forEach((game) => {
+        const gameDiv = document.createElement('div');
+        gameDiv.innerText = `Game ID: ${game.id}`;
+        gameDiv.classList.add('game-item');
+
+        if (game.players.length < 2) {
+            const joinButton = document.createElement('button');
+            joinButton.innerText = 'Join';
+            joinButton.addEventListener('click', () => {
+                window.location.href = `/game.html?gameId=${game.id}`;
+            });
+            gameDiv.appendChild(joinButton);
+        } else {
+            const fullText = document.createElement('span');
+            fullText.innerText = 'Full';
+            gameDiv.appendChild(fullText);
+        }
+
+        gameListDiv.appendChild(gameDiv);
+    });
 });
 
-socket.on('chat-message', ({ userId, msg }) => {
-    const messageElement = document.createElement('div');
-    messageElement.textContent = `User ${userId}: ${msg}`;
-    chatDisplay.appendChild(messageElement);
-    chatDisplay.scrollTop = chatDisplay.scrollHeight; // เลื่อนลงไปยังข้อความล่าสุด
-});
+window.onload = () => {
+    socket.emit('requestGameList');
+};
