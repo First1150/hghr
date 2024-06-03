@@ -6,7 +6,7 @@ document.getElementById('back-to-lobby-btn').addEventListener('click', () => {
     window.location.href = '/lobby.html';
 });
 
-socket.emit('joinGame', { gameId });awds
+socket.emit('joinGame', { gameId });
 
 socket.on('gameUpdate', (gameState) => {
     const playersListDiv = document.getElementById('players-list');
