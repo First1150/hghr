@@ -3,7 +3,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const gameId = urlParams.get('gameId');
 
 document.getElementById('back-to-lobby-btn').addEventListener('click', () => {
-    window.location.href = '/lobby.html';
+    window.location.href = '/lob.html';
 });
 
 socket.emit('joinGame', { gameId });
