@@ -5,7 +5,7 @@ document.getElementById('new-game-btn').addEventListener('click', () => {
 });
 
 socket.on('gameCreated', (gameId) => {
-    window.location.href = `/game.html?gameId=${gameId}`;
+    window.location.href = `/index.html?gameId=${gameId}`;
 });
 
 socket.on('gameList', (games) => {
